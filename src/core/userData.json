@@ -4,7 +4,6 @@
     "email": "john.doe@example.com",
     "firstName": "John",
     "lastName": "Doe",
-
     "phoneNumber": "555-123-4567",
     "dateOfBirth": "01/01/1990"
   },
@@ -21,7 +20,6 @@
     "email": "alice.johnson@example.com",
     "firstName": "Alice",
     "lastName": "Johnson",
-
     "phoneNumber": "555-456-7890",
     "dateOfBirth": "12/15/1982"
   }
