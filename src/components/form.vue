@@ -20,6 +20,7 @@ export default Vue.extend({
       threeYearsInDays: 1095,
       addresses: [
         {
+          tempId: new Date().getTime().toString(),
           addressLineOne: "",
           postcode: "",
           dateMovedIn: "",
@@ -33,6 +34,7 @@ export default Vue.extend({
       this.addresses = [
         ...this.addresses,
         {
+          tempId: new Date().getTime().toString(),
           addressLineOne: "",
           postcode: "",
           dateMovedIn: "",
@@ -77,8 +79,8 @@ export default Vue.extend({
         text="Please provide you address history for the past 3 years"
       ></TextComponent>
       <FormAddressComponent
-        v-for="(_, index) of addresses"
-        :key="index"
+        v-for="(address, index) of addresses"
+        :key="address.tempId"
         v-model="addresses[index]"
         :index="index"
         @onRemoveAddress="removeAddress($event)"
