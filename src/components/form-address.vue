@@ -10,7 +10,7 @@ export default Vue.extend({
     TextComponent,
   },
   props: {
-    address: {
+    value: {
       type: Object as PropType<FormAddress>,
       required: true,
     },
@@ -21,9 +21,9 @@ export default Vue.extend({
   },
   data() {
     return {
-      postcode: this.address.postcode,
-      addressLineOne: this.address.addressLineOne,
-      dateMovedIn: this.address.dateMovedIn,
+      postcode: this.value.postcode,
+      addressLineOne: this.value.addressLineOne,
+      dateMovedIn: this.value.dateMovedIn,
       postcodeResults: [] as string[],
       isEnteringPostcode: false,
     };
@@ -39,20 +39,29 @@ export default Vue.extend({
     },
   },
   watch: {
-    postcode: async function (currentPostcode: string, previousPostcode) {
+    async postcode(newPostcode, previousPostcode) {
+      this.$emit("input", { ...this.value, postcode: newPostcode });
       this.postcodeResults = await fetchAutocompletePostcodes(
-        currentPostcode,
+        newPostcode,
         previousPostcode
       );
+    },
+    addressLineOne(newAddressLineOne) {
+      this.$emit("input", { ...this.value, addressLineOne: newAddressLineOne });
+    },
+    dateMovedIn(newDateMovedIn) {
+      this.$emit("input", { ...this.value, dateMovedIn: newDateMovedIn });
+      this.$emit("dateMovedIn", { index: this.index, date: newDateMovedIn });
     },
   },
 });
 </script>
 <template>
-  <section class="w-100 p-2">
-    <div class="d-flex justify-content-between">
+  <section class="w-100">
+    <div class="d-flex py-2 justify-content-between">
       <TextComponent type="h6" :text="`Address ${index + 1}`"></TextComponent>
       <b-icon
+        v-if="index !== 0"
         role="button"
         icon="x-square"
         @click="removeAddress(index)"
@@ -83,7 +92,8 @@ export default Vue.extend({
       ></b-form-input>
       <b-list-group
         v-if="postcodeResults.length > 0 && isEnteringPostcode"
-        class="position-absolute w-100"
+        class="position-absolute w-100 z-1"
+        role="button"
       >
         <b-list-group-item
           v-for="(result, index) in postcodeResults"

@@ -1,15 +1,16 @@
+import FormView from "@/views/FormView.vue";
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import FormView from "@/views/FormView.vue";
+import store from "./../store/index";
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
     path: "/:userId",
-    name: "form",
+    name: "formUserId",
     component: FormView,
     beforeEnter: (to, from, next) => {
-      // TODO load the user data from getUserDataById and store it with VueX
+      store.dispatch("fetchUser", to.params.userId);
       next();
     },
   },
