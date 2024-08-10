@@ -11,8 +11,6 @@ export default Vue.extend({
 </script>
 <template>
   <div>
-    <FormComponent>
-      <!-- TODO add relevant components to render form here -->
-    </FormComponent>
+    <FormComponent></FormComponent>
   </div>
 </template>

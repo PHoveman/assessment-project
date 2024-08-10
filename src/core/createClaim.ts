@@ -7,9 +7,11 @@ export async function createClaim(
   claimData: Claim["data"]
 ): Promise<{ claim: Claim | null; error: Error | null }> {
   const { user, error } = await getUserDataById(userId);
+
   if (error || !user) {
     return { claim: null, error };
   }
+
   const newClaim: Claim = {
     id: new Date().getTime().toString(),
     userId: user.id,
@@ -20,5 +22,6 @@ export async function createClaim(
     userData: user,
     creationIpAddress,
   };
+
   return { claim: newClaim, error: null };
 }

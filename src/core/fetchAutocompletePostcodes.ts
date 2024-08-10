@@ -7,10 +7,10 @@ export default async function fetchAutocompletePostcodes(
   if (!currentPostcode) return [];
   if (previousPostcode === currentPostcode) return [];
 
-  const test = await fetch(
+  const res = await fetch(
     `https://api.postcodes.io/postcodes/${currentPostcode}/autocomplete`
   );
-  const res: AutoCompleteRes = await test.json();
+  const body: AutoCompleteRes = await res.json();
 
-  return res.result ?? [];
+  return body.result ?? [];
 }

@@ -16,7 +16,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      currentDate: new Date().toISOString().split("T")[0],
+      currentDateStr: new Date().toISOString().split("T")[0],
       threeYearsInDays: 1095,
       addresses: [
         {
@@ -54,8 +54,8 @@ export default Vue.extend({
     isOverThreeYears(): boolean {
       return (
         this.activeDateStrings.reduce((acc: number, val: string) => {
-          const currentDateFormatted = dayjs(this.currentDate);
-          const differenceInDays = currentDateFormatted.diff(val, "day");
+          const currentDateStrFormatted = dayjs(this.currentDateStr);
+          const differenceInDays = currentDateStrFormatted.diff(val, "day");
 
           return differenceInDays + acc;
         }, 0) > this.threeYearsInDays
@@ -69,14 +69,15 @@ export default Vue.extend({
     <div class="p-5">
       <TextComponent
         type="h2"
-        :text="`Welcome back ${user.firstName} ${user.lastName}`"
+        class="mb-5"
+        :text="`Welcome back ${user.firstName}`"
       ></TextComponent>
       <TextComponent
-        type="h4"
+        type="h5"
         text="Please provide you address history for the past 3 years"
       ></TextComponent>
       <FormAddressComponent
-        v-for="(address, index) of addresses"
+        v-for="(_, index) of addresses"
         :key="index"
         v-model="addresses[index]"
         :index="index"
@@ -97,7 +98,7 @@ export default Vue.extend({
         :addresses="addresses"
         :user="user"
         :isOverThreeYears="isOverThreeYears"
-        :currentDate="currentDate"
+        :currentDateStr="currentDateStr"
       ></SubmitComponent>
     </div>
   </div>

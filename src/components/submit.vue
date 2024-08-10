@@ -25,7 +25,7 @@ export default Vue.extend({
       type: Boolean,
       required: true,
     },
-    currentDate: {
+    currentDateStr: {
       type: String,
       required: true,
     },
@@ -72,7 +72,7 @@ export default Vue.extend({
     dateIsInFuture(): boolean {
       return this.addresses.some(
         (address) =>
-          dayjs(this.currentDate).diff(dayjs(address.dateMovedIn)) < 0
+          dayjs(this.currentDateStr).diff(dayjs(address.dateMovedIn)) < 0
       );
     },
     hasEmptyInputs(): boolean {
